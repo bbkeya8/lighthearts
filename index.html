@@ -1,176 +1,168 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport"
-			content="width=device-width,initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
-		<meta name="apple-mobile-web-app-capable" content="yes">
-		<meta name="full-screen" content="true">
-		<meta name="screen-orientation" content="portrait">
-		<meta name="x5-fullscreen" content="true">
-		<meta name="360-fullscreen" content="true">
-		<title>light the hearts</title>
-		<style type="text/css">
-.btn {
-	border: 1px solid #ccc;
-	border-radius: 4px;
-	padding: 12px;
-	transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
-	background-color: #3498db;
-	color: #fff;
-	display:inline;
-	margin-right:10px;
+
+var i, j, IsOver, Size = 4, StartTime, EndTime, Moves, IsRepeat;
+Pic = new Array(2);
+Pic[0] = new Image();
+Pic[0].src = "img/light0.png";
+Pic[1] = new Image();
+Pic[1].src = "img/light103.png";
+Fld = new Array(Size);
+for (i = 0; i < Size; i++) {
+	Fld[i] = new Array(Size);
 }
-.result-container {
-	display: none;
+PreFld = new Array(Size);
+for (i = 0; i < Size; i++) {
+	PreFld[i] = new Array(Size);
 }
-
-.result-container {
-	display: none;
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	text-align: center;
-	background: rgba(0, 0, 0, 0.9);
-	color: #fff;
-	padding-top: 50px;
+function SwitchFld(a, b) {
+	if (a < 0) {
+		return (false);
+	}
+	if (a >= Size) {
+		return (false);
+	}
+	if (b < 0) {
+		return (false);
+	}
+	if (b >= Size) {
+		return (false);
+	}
+	Fld[a][b] = 1 - Fld[a][b];
+	return (true);
 }
-
-.result-container>p {
-	margin: 20px 0 40px 0;
-	font-size: 18px;
-}
-
-.play-again {
-	background-color: #1abc9c;
-}
-
-.title {
-	color: #fff;
-	font-size: 13px;
-}
-
-#switchBtn {
-	background: #1abc9c;
-}
-.rcontainer{
-	position:relative;
-	top:20%;
-	width:80%;
-	margin:auto;
-}
-
-
-table
-  {
-  border-collapse:collapse;
-  border: 1px solid white;
-  }
-
-
-
-
-</style>
-		<script type="text/javascript" src="js/game.js"></script>
-	</head>
-	<body bgcolor=#AABBCC>
-		<div ALIGN=center>
-			<div style="font-weight: bold; color: #3498db;">
-				<span id="movecount">0</span> 步			</div>
-			<h1 class="title">
-				把所有的心都点亮吧!
-			</h1>
-			<table border=4 cellpadding=0 cellspacing=2 bgcolor=#CCCCCC
-				id="table">
-			</table>
-			<br>
-			<table>
-				<tr>
-					<td>
-						<div class="btn play-again" onclick="javascript:Init(true)">
-							重新开始
-						</div>
-					</td>
-
-				</tr>
-			</table>
-			<div class="result-container" id="result_container" style="display:block;">
-				<div class="rcontainer">
-					<p id="result"></p>
-					<div class="btn play-again" onclick="Init(true)">
-							再来一盘
-						</div>
-				</div>
-			</div>
-		</div>
-		<script language=javascript>
-            var mebtnopenurl = '＃';
-		window.shareData = {
-		        "imgUrl": "./img/icon.png",
-		        "timeLineLink": "＃",
-		        "tTitle": "",
-		        "tContent": ""
-		};
-				
-		function goHome(){
-			window.location=mebtnopenurl;
+function Init(c) {
+	var a, b, d;
+	if (c) {
+		Fld = new Array(Size);
+		for (i = 0; i < Size; i++) {
+			Fld[i] = new Array(Size);
 		}
-
-
-		function dp_Ranking(){
-			window.location=mebtnopenurl;
+		PreFld = new Array(Size);
+		for (i = 0; i < Size; i++) {
+			PreFld[i] = new Array(Size);
 		}
-
-		function showAd(){
-		}
-		function hideAd(){
-		}
-		document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
-		    
-		    WeixinJSBridge.on('menu:share:appmessage', function(argv) {
-		        WeixinJSBridge.invoke('sendAppMessage', {
-		            "img_url": window.shareData.imgUrl,
-		            "link": window.shareData.timeLineLink,
-		            "desc": window.shareData.tContent,
-		            "title": window.shareData.tTitle
-		        }, onShareComplete);
-		    });
-
-		    WeixinJSBridge.on('menu:share:timeline', function(argv) {
-		        WeixinJSBridge.invoke('shareTimeline', {
-		            "img_url": window.shareData.imgUrl,
-		            "img_width": "640",
-		            "img_height": "640",
-		            "link": window.shareData.timeLineLink,
-		            "desc": window.shareData.tContent,
-		            "title": window.shareData.tTitle
-		        }, onShareComplete);
-		    });
-		}, false);
-		</script>
-
-        <script src="js/jquery.min.js"></script>
-		<div style="display: none;">
-			<script type="text/javascript">
-			var auth = new Auth9G("zqddp");
-			auth.order = "asc";
-			var myData = {};
-			auth.identify = function() {
-				if (auth.user) {
-					window.shareData.timeLineLink += ((window.shareData.timeLineLink.indexOf("?") == -1 ? "?" : "&") + "uid=" + auth.myuid);
-				}
+		for (a = 0; a < Size; a++) {
+			for (b = 0; b < Size; b++) {
+				Fld[a][b] = 0;
 			}
-			
-
-			</script>
-			<script language="JavaScript">
-   				draw();
-  				Init(true);
-			</script>
-<div style='display:none'>
- 
-</div>
-	</body>
-</html>
+		}
+		for (d = 0; d < 19; d++) {
+			a = Math.floor(Math.random() * Size);
+			b = Math.floor(Math.random() * Size);
+			SwitchFld(a - 1, b);
+			SwitchFld(a + 1, b);
+			SwitchFld(a, b - 1);
+			SwitchFld(a, b + 1);
+			SwitchFld(a, b);
+		}
+		for (a = 0; a < Size; a++) {
+			for (b = 0; b < Size; b++) {
+				PreFld[a][b] = Fld[a][b];
+			}
+		}
+		IsRepeat = false;
+	} else {
+		for (a = 0; a < Size; a++) {
+			for (b = 0; b < Size; b++) {
+				Fld[a][b] = PreFld[a][b];
+			}
+		}
+		IsRepeat = true;
+	}
+	IsOver = false;
+	NMoves = 0;
+	RefreshScreen(1);
+	Now = new Date();
+	StartTime = Now.getTime() / 1000;
+	$('#movecount').text(NMoves);
+	$('#result_container').hide();
+}
+function Clicked(a, b) {
+	if (SwitchFld(a - 1, b)) {
+		RefreshPic(a - 1, b);
+	}
+	if (SwitchFld(a + 1, b)) {
+		RefreshPic(a + 1, b);
+	}
+	if (SwitchFld(a, b - 1)) {
+		RefreshPic(a, b - 1);
+	}
+	if (SwitchFld(a, b + 1)) {
+		RefreshPic(a, b + 1);
+	}
+	if (SwitchFld(a, b)) {
+		RefreshPic(a, b);
+	}
+	if (IsOver) {
+		return;
+	}
+	NMoves++;
+	$('#movecount').text(NMoves);
+	OverTest();
+}
+function OverTest() {
+	var b, d, f = 0;
+	for (b = 0; b < Size; b++) {
+		for (d = 0; d < Size; d++) {
+			f += Fld[b][d];
+		}
+	}
+	if (f !== Size * Size) {
+		return;
+	}
+	IsOver = true;
+	Now = new Date();
+	EndTime = Now.getTime() / 1000;
+	f = Math.floor(EndTime - StartTime);
+	var c = "真是萌萌哒！";
+	var e = "这成绩必须炫耀下";
+	if (f < 10) {
+		c = "是天才女神啊！";
+	} else {
+		if (f < 20) {
+			c = "是聪明女神啊！";
+		} else {
+			if (f < 30) {
+				c = "美丽聪明啊！";
+			}
+		}
+	}
+	var a="用 "+NMoves+" 步点亮了所有的心呢。";
+	$("#result").html("哇！你"+a+"你"+c);
+	$("#result_container").show();
+	dp_submitScore(NMoves,f);
+	
+}
+function RefreshPic(a, b) {
+	$("#table img")[Size * b + a].src = Pic[Fld[a][b]].src;
+}
+function RefreshScreen() {
+	var a, b;
+	for (a = 0; a < Size; a++) {
+		for (b = 0; b < Size; b++) {
+			$("#table img")[Size * b + a].src = Pic[Fld[a][b]].src;
+		}
+	}
+}
+function switchSize() {
+	Size = Size === 4 ? 5 : 4;
+	draw();
+	Init(true);
+	if (Size === 4) {
+		$("#switchBtn").val("换个有难度的");
+	} else {
+		$("#switchBtn").val("来个简单点的");
+	}
+}
+  function draw() {
+        var list = [];
+        for (j=0; j<Size; j++)
+        { 
+            list.push("<tr>");
+          for (i=0; i<Size; i++)
+            list.push("<td><IMG src='img/light103.png' border=0 onclick=\"Clicked("+i+","+j+")\"></td>");
+          
+          list.push('</tr>');
+        }
+        $('#table').html(list.join(''));
+        
+    }
