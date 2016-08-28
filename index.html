@@ -9,76 +9,76 @@
 		<meta name="screen-orientation" content="portrait">
 		<meta name="x5-fullscreen" content="true">
 		<meta name="360-fullscreen" content="true">
-		<title>light the hearts</title>
+		<title>木水</title>
 		<style type="text/css">
-.btn {
-	border: 0px solid #ccc;
-	border-radius: 4px;
-	padding: 12px;
-	transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
-	background-color: #3498db;
-	color: #fff;
-	display:inline;
-	margin-right:10px;
-}
-.result-container {
-	display: none;
-}
 
-.result-container {
-	display: none;
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	text-align: center;
-	background: rgba(0, 0, 0, 0.9);
-	color: #fff;
-	padding-top: 50px;
-}
+		.btn {
+			border: 0px solid #ccc;
+			border-radius: 4px;
+			padding: 12px;
+			transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+			background-color: #3498db;
+			color: #fff;
+			display:inline;
+			margin-right:10px;
+		}
+		.result-container {
+			display: none;
+		}
 
-.result-container>p {
-	margin: 20px 0 40px 0;
-	font-size: 18px;
-}
+		.result-container {
+			display: none;
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			text-align: center;
+			background: rgba(0, 0, 0, 0.9);
+			color: #fff;
+			padding-top: 50px;
+		}
 
-.play-again {
-	background-color: #F250A9;
-}
+		.result-container>p {
+			margin: 20px 0 40px 0;
+			font-size: 18px;
+		}
 
-.title {
-	color: #fff;
-	font-size: 13px;
-}
+		.play-again {
+			background-color: #F250A9;
+		}
 
-#switchBtn {
-	background: #F250A9;
-}
-.rcontainer{
-	position:relative;
-	top:20%;
-	width:80%;
-	margin:auto;
-}
+		.title {
+			color: #fff;
+			font-size: 13px;
+		}
 
-body {
-background-color: #F291C7;
-}
+		#switchBtn {
+			background: #F250A9;
+		}
+		.rcontainer{
+			position:relative;
+			top:20%;
+			width:80%;
+			margin:auto;
+		}
 
-
-
-table
-  {
-  border-collapse:collapse;
-  border: 3px solid white;
-  border-spacing: 0px 0px 0px 0px;
-  background: #cccccc;
-  margin:0px 0px 0px 0px;
-  padding:0px 0px 0px 0px;
-  }
+		body {
+		background-color: #F291C7;
+		}
 
 
+
+		table
+		  {
+		  border-collapse:separate;
+		  border: 3px solid white;
+		  background: white;
+		  border-spacing:0px;
+		  }
+		img {
+		  display: block;
+		}
 
 
 </style>
@@ -86,7 +86,7 @@ table
 	</head>
 	<body bgcolor=#AABBCC>
 		<div ALIGN=center>
-			<div style="font-weight: bold; color: #3498db;">
+			<div style="font-weight: bold; color: #421F73;">
 				<span id="movecount">0</span> 步			</div>
 			<h1 class="title">
 				把所有的心都点亮吧!
@@ -106,72 +106,14 @@ table
 				</div>
 			</div>
 		</div>
-		<script language=javascript>
-            var mebtnopenurl = '＃';
-		window.shareData = {
-		        "imgUrl": "./img/icon.png",
-		        "timeLineLink": "＃",
-		        "tTitle": "",
-		        "tContent": ""
-		};
-				
-		function goHome(){
-			window.location=mebtnopenurl;
-		}
 
-
-		function dp_Ranking(){
-			window.location=mebtnopenurl;
-		}
-
-		function showAd(){
-		}
-		function hideAd(){
-		}
-		document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
-		    
-		    WeixinJSBridge.on('menu:share:appmessage', function(argv) {
-		        WeixinJSBridge.invoke('sendAppMessage', {
-		            "img_url": window.shareData.imgUrl,
-		            "link": window.shareData.timeLineLink,
-		            "desc": window.shareData.tContent,
-		            "title": window.shareData.tTitle
-		        }, onShareComplete);
-		    });
-
-		    WeixinJSBridge.on('menu:share:timeline', function(argv) {
-		        WeixinJSBridge.invoke('shareTimeline', {
-		            "img_url": window.shareData.imgUrl,
-		            "img_width": "640",
-		            "img_height": "640",
-		            "link": window.shareData.timeLineLink,
-		            "desc": window.shareData.tContent,
-		            "title": window.shareData.tTitle
-		        }, onShareComplete);
-		    });
-		}, false);
-		</script>
 
         <script src="js/jquery.min.js"></script>
-		<div style="display: none;">
-			<script type="text/javascript">
-			var auth = new Auth9G("zqddp");
-			auth.order = "asc";
-			var myData = {};
-			auth.identify = function() {
-				if (auth.user) {
-					window.shareData.timeLineLink += ((window.shareData.timeLineLink.indexOf("?") == -1 ? "?" : "&") + "uid=" + auth.myuid);
-				}
-			}
-			
-
-			</script>
+	
 			<script language="JavaScript">
    				draw();
   				Init(true);
 			</script>
-<div style='display:none'>
- 
-</div>
+
 	</body>
 </html>
